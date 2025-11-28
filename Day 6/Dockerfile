@@ -8,3 +8,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Moscow
 
 RUN apt-get update && apt-get install -y wget git default-jdk maven
+
+# Установка Apache Tomcat
+RUN mkdir -p /opt/tomcat
+WORKDIR /opt
+
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.112/bin/apache-tomcat-9.0.112.tar.gz && \
+    tar xzvf apache-tomcat-9.0.112.tar.gz -C /opt/tomcat --strip-components=1 && \
+    chmod +x /opt/tomcat/bin/*.sh

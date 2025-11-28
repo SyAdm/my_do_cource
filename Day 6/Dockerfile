@@ -7,6 +7,7 @@ MAINTAINER Sherali Turabov <turabov.sh@gmail.com>
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Moscow
 
+# Устанавливаем все зависимости (wget, git,default-jdk, maven)
 RUN apt-get update && apt-get install -y wget git default-jdk maven
 
 # Установка Apache Tomcat
@@ -26,3 +27,9 @@ RUN mvn -B package
 
 # Копирование WAR в Tomcat
 RUN cp /root/addressbook/target/addressbook-*.war /opt/tomcat/webapps/addressbook.war
+
+# Tomcat port
+EXPOSE 8080
+
+# Запуск Tomcat
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]

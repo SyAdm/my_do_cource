@@ -59,7 +59,7 @@
 - [ ] Особенности работы с сетями в Docker
 - [ ] Мониторинг контейнеров
 - [ ] Docker registry: native, Artifactory / Nexus
-- [ ] **ДЗ:** Упаковка приложения
+- [x] **ДЗ:** [Упаковка приложения](https://github.com/SyAdm/my_do_cource/blob/main/Day%206/Dockerfile)
 
 ### Занятие 7
 - [ ] Docker практика

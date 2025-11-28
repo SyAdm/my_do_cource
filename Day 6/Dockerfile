@@ -19,3 +19,7 @@ RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.112/bin/apache-tomcat-9.0
 
 # Клонирование репозитория Addressbook
 RUN git clone https://github.com/vaadin/addressbook.git /root/addressbook
+
+# Сборка Maven проекта
+WORKDIR /root/addressbook
+RUN mvn -B package

@@ -16,3 +16,6 @@ WORKDIR /opt
 RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.112/bin/apache-tomcat-9.0.112.tar.gz && \
     tar xzvf apache-tomcat-9.0.112.tar.gz -C /opt/tomcat --strip-components=1 && \
     chmod +x /opt/tomcat/bin/*.sh
+
+# Клонирование репозитория Addressbook
+RUN git clone https://github.com/vaadin/addressbook.git /root/addressbook

@@ -23,3 +23,6 @@ RUN git clone https://github.com/vaadin/addressbook.git /root/addressbook
 # Сборка Maven проекта
 WORKDIR /root/addressbook
 RUN mvn -B package
+
+# Копирование WAR в Tomcat
+RUN cp /root/addressbook/target/addressbook-*.war /opt/tomcat/webapps/addressbook.war

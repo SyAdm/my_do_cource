@@ -8,3 +8,6 @@ WORKDIR /app
 
 # Let's install GIT since it's not included in the Alpine build.
 RUN apk add --no-cache git
+
+# Let's clone a test project from the GIT repository
+RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git .

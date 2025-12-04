@@ -3,4 +3,4 @@
 FROM tomcat:10.1-jre17-temurin-jre
 
 # Copy the WAR file from the volume (docker-compose will mount /input)
-COPY /input/addressbook-*.war /usr/local/tomcat/webapps/addressbook.war
+COPY /input/hello-*.war /usr/local/tomcat/webapps/hello.war

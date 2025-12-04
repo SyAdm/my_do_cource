@@ -1,0 +1,3 @@
+# Dockerfile.prod
+
+FROM tomcat:10.1-jre17-temurin-jre

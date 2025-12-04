@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   builder:
@@ -9,15 +9,13 @@ services:
       - build_artifacts:/output
 
   prod:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
+    image: tomcat:10.1-jdk17-temurin
     depends_on:
       - builder
-    volumes:
-      - build_artifacts:/input
     ports:
       - "8080:8080"
+    volumes:
+      - build_artifacts:/usr/local/tomcat/webapps
 
 volumes:
   build_artifacts:

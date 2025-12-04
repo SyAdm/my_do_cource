@@ -1,0 +1,3 @@
+# Dockerfile.build
+
+FROM maven:3.9.11-eclipse-temurin-11-alpine as builder

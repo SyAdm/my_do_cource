@@ -2,5 +2,9 @@
 
 # Build stage (builder): we use the official Maven image with JDK 11 based on Alpine
 FROM maven:3.9.11-eclipse-temurin-11-alpine as builder
+
 # Create and set up a working directory
 WORKDIR /app
+
+# Let's install GIT since it's not included in the Alpine build.
+RUN apk add --no-cache git

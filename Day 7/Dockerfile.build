@@ -14,3 +14,7 @@ RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git .
 
 # Run Maven in batch mode (-B) and build the project
 RUN mvn -B package
+
+# Copying the completed WAR to the volume
+RUN mkdir -p /output
+RUN cp target/hello-*.war /output/

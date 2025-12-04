@@ -11,3 +11,6 @@ RUN apk add --no-cache git
 
 # Let's clone a test project from the GIT repository
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git .
+
+# Run Maven in batch mode (-B) and build the project
+RUN mvn -B package

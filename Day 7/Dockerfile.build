@@ -1,7 +1,7 @@
 # Dockerfile.build
 
 # Build stage (builder): we use the official Maven image with JDK 11 based on Alpine
-FROM maven:3.9.11-eclipse-temurin-11-alpine as builder
+FROM maven:3.9.11-eclipse-temurin-11-alpine
 
 # Create and set up a working directory
 WORKDIR /app
@@ -10,11 +10,13 @@ WORKDIR /app
 RUN apk add --no-cache git
 
 # Let's clone a test project from the GIT repository
-RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git .
+RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git project
+
+WORKDIR /app/project
 
 # Run Maven in batch mode (-B) and build the project
 RUN mvn -B package
 
 # Copying the completed WAR to the volume
-RUN mkdir -p /output
-RUN cp target/hello-*.war /output/
+#RUN mkdir -p /output
+#RUN cp target/hello-*.war /output/

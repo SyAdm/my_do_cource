@@ -48,4 +48,8 @@
         state: started
         enabled: 'yes'
 
-
+    - name: Copy WAR file to deploy server
+      copy:
+        src: /opt/hello-1.0.war
+        dest: /var/lib/tomcat9/webapps
+        remote_src: true

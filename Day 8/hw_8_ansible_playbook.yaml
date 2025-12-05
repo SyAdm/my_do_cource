@@ -1,0 +1,16 @@
+---
+- name: Step 1 - Building Project
+  hosts: build
+  become: yes
+
+  tasks:
+          - name: Update apt cache and install packages
+            apt:
+                    name:
+                            - git
+                            - default-jdk
+                            - maven
+                    state: present
+                    update_cache: yes
+
+

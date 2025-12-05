@@ -4,13 +4,17 @@
   become: yes
 
   tasks:
-          - name: Update apt cache and install packages
-            apt:
-                    name:
-                            - git
-                            - default-jdk
-                            - maven
-                    state: present
-                    update_cache: yes
+   - name: Update apt cache and install packages
+      apt:
+        name:
+          - git
+          - default-jdk
+          - maven
+        state: present
+        update_cache: 'yes'
 
-
+    - name: Clone sample Java WAR project
+      git:
+        repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+        dest: /opt/boxfuse-sample
+        version: master

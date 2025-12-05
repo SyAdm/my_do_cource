@@ -18,3 +18,8 @@
         repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
         dest: /opt/boxfuse-sample
         version: master
+
+    - name: Build project with Maven
+      command: mvn -B package
+      args:
+        chdir: /opt/boxfuse-sample

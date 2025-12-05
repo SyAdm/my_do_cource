@@ -30,3 +30,14 @@
         dest: /opt/hello-1.0.war
         mode: pull
       delegate_to: 10.128.0.3
+
+- name: Step 2 - Product Server
+  hosts: prod
+  become: 'yes'
+  
+  tasks:
+    - name: Install Tomcat
+      apt:
+        name: tomcat9
+        state: present
+        update_cache: 'yes'

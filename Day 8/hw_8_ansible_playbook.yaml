@@ -42,4 +42,10 @@
         state: present
         update_cache: 'yes'
 
+    - name: Ensure Tomcat service is started and enabled
+      systemd:
+        name: tomcat9
+        state: started
+        enabled: 'yes'
+
 

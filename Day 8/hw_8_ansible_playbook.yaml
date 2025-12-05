@@ -4,57 +4,59 @@
   become: yes
 
   tasks:
-   - name: Update apt cache and install packages
-      apt:
-        name:
-          - git
-          - default-jdk
-          - maven
-        state: present
-        update_cache: 'yes'
+          - name: Update apt cache and install packages
+            apt:
+                    name:
+                            - git
+                            - default-jdk
+                            - maven
+                    state: present
+                    update_cache: yes
 
-    - name: Clone sample Java WAR project
-      git:
-        repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
-        dest: /opt/boxfuse-sample
-        version: master
+          - name: Clone sample Java WAR project
+            git:
+                    repo: "https://github.com/boxfuse/boxfuse-sample-java-war-hello.git"
+                    dest: "/opt/boxfuse-sample"
+                    version: master
 
-    - name: Build project with Maven
-      command: mvn -B package
-      args:
-        chdir: /opt/boxfuse-sample
+          - name: Build project with Maven
+            command: mvn -B package
+            args:
+                    chdir: /opt/boxfuse-sample
 
-    - name: Copy WAR file to deploy server
-      synchronize:
-        src: /opt/boxfuse-sample/target/hello-1.0.war
-        dest: /opt/hello-1.0.war
-        mode: pull
-      delegate_to: 10.128.0.3
+          - name: Copy WAR file to deploy server
+            synchronize:
+                    src: "/opt/boxfuse-sample/target/hello-1.0.war"
+                    dest: "/opt/hello-1.0.war"
+                    mode: pull
+            delegate_to: 10.128.0.3
 
 - name: Step 2 - Product Server
   hosts: prod
-  become: 'yes'
-  
+  become: yes
+
   tasks:
-    - name: Install Tomcat
-      apt:
-        name: tomcat9
-        state: present
-        update_cache: 'yes'
+          - name: Install Tomcat
+            apt:
+                    name: tomcat9
+                    state: present
+                    update_cache: yes
 
-    - name: Ensure Tomcat service is started and enabled
-      systemd:
-        name: tomcat9
-        state: started
-        enabled: 'yes'
+          - name: Ensure Tomcat service is started and enabled
+            systemd:
+                    name: tomcat9
+                    state: started
+                    enabled: yes
 
-    - name: Copy WAR file to deploy server
-      copy:
-        src: /opt/hello-1.0.war
-        dest: /var/lib/tomcat9/webapps
-        remote_src: true
+          - name: Copy WAR file to deploy server
+            copy:
+                    src: "/opt/hello-1.0.war"
+                    dest: "/var/lib/tomcat9/webapps"
+                    remote_src: true
 
-    - name: Restart Tomcat to deploy
-      systemd:
-        name: tomcat9
-        state: restarted
+          - name: Restart Tomcat to deploy
+            systemd:
+                    name: tomcat9
+                    state: restarted
+
+...

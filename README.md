@@ -84,7 +84,7 @@
 - [x] Ansible: знакомство с переменными, модулями shell, copy и др.
 - [x] Ansible: запуск на группу хостов
 - [x] Ansible: шаблоны и роли конфигурации
-- [ ] **ДЗ:** Подготовка тестового окружения с помощью Ansible
+- [x] **ДЗ:** [Подготовка тестового окружения с помощью Ansible](https://github.com/SyAdm/my_do_cource/blob/main/Day%208/hw_8_ansible_playbook.yaml)
 
 ### Занятие 9
 - [ ] Ansible практика

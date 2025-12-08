@@ -1,0 +1,26 @@
+---
+- name: Replace default nginx page
+  hosts: web
+  become: yes
+  vars:
+    custom_message: "Welcome to nginx!"
+
+  tasks:
+    - name: Install nginx
+      package:
+        name: nginx
+        state: present
+
+    - name: Replace default page content
+      lineinfile:
+        path: /var/www/html/index.html
+        regexp: '<p><script> document.write(new Date().toLocaleDateString()); </script></p>'
+        line: '<p>{{ custom_message }}</p>'
+        backup: yes
+      notify: Restart nginx
+
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted

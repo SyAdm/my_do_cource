@@ -1,2 +1,31 @@
 ---
 # tasks file for builder
+
+---
+- name: Install build tools
+  apt:
+    name:
+      - git
+      - default-jdk
+      - maven
+    state: present
+    update_cache: yes
+
+- name: Clone Java WAR project
+  git:
+    repo: "{{ project_repo }}"
+    dest: "{{ project_dest }}"
+    version: "{{ project_branch }}"
+
+- name: Build project with Maven
+  command: mvn -B package
+  args:
+    chdir: "{{ project_dest }}"
+
+- name: Transfer WAR file to prod server
+  synchronize:
+    src: "{{ war_src_path }}"
+    dest: "{{ war_dest_path }}"
+    mode: pull
+  delegate_to: "{{ prod_server }}"
+

@@ -1,2 +1,23 @@
 ---
 # tasks file for prod
+
+- name: Install Tomcat
+  apt:
+    name: "{{ tomcat_package }}"
+    state: present
+    update_cache: yes
+  notify: restart tomcat
+
+- name: Start and enable Tomcat
+  systemd:
+    name: "{{ tomcat_service }}"
+    state: started
+    enabled: yes
+
+- name: Deploy WAR to Tomcat
+  copy:
+    src: "{{ war_src_path }}"
+    dest: "{{ war_deploy_path }}"
+    remote_src: true
+  notify: Restart Tomcat
+

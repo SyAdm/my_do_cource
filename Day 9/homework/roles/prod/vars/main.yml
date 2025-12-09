@@ -1,2 +1,8 @@
 ---
 # vars file for prod
+
+tomcat_package: "tomcat9"
+tomcat_service: "tomcat9"
+war_src_path: "/opt/hello-1.0.war"
+war_deploy_path: "/var/lib/tomcat9/webapps"
+

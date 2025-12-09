@@ -91,7 +91,7 @@
 - [x] Написание плэйбуков. Работа с ролями
 - [x] Ansible-galaxy. Обзор готовых ролей
 - [x] Ansible: поднимаем кластер приложений
-- [ ] **ДЗ:** Практика работы с Ansible
+- [x] **ДЗ:** [Практика работы с Ansible](https://github.com/SyAdm/my_do_cource/tree/main/Day%209/homework)
 
 ## Модуль 2. Автоматизация
 

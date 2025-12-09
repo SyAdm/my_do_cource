@@ -1,0 +1,25 @@
+---
+- name: Config web servers
+  hosts: all
+  become: yes
+
+  vars:
+          src_folder: ./
+          dst_folder: /var/www/html
+
+  tasks:
+         - name: Ensure nginx package is present
+           apt:
+                  name: nginx
+                  state: present
+
+         - name: Template index.html
+           template: src={{ src_folder }}/index.j2 dest={{ dst_folder }}/index.html mode=0555
+           notify:
+                   - restart nginx
+
+  handlers:
+          - name: restart nginx
+            service:
+                    name: nginx
+                    state: restarted

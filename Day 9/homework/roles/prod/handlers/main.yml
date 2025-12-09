@@ -1,2 +1,8 @@
 ---
 # handlers file for prod
+
+- name: Restart Tomcat
+  systemd:
+    name: "{{ tomcat_service }}"
+    state: restarted
+

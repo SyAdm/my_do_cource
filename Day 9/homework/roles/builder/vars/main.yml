@@ -1,2 +1,10 @@
 ---
 # vars file for builder
+
+project_repo: "https://github.com/boxfuse/boxfuse-sample-java-war-hello.git"
+project_dest: "/opt/boxfuse-sample"
+project_branch: "master"
+war_src_path: "/opt/boxfuse-sample/target/hello-1.0.war"
+war_dest_path: "/opt/hello-1.0.war"
+prod_server: "10.128.0.3"
+

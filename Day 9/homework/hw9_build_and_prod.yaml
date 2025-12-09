@@ -1,12 +1,12 @@
 ---
 - name: Step 1 - Build project
-  hosts: build
+  hosts: build_srv
   become: yes
   roles:
     - builder
 
 - name: Step 2 - Deploy to Tomcat
-  hosts: prod
+  hosts: prod_srv
   become: yes
   roles:
     - prod

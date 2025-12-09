@@ -1,7 +1,6 @@
 ---
 # tasks file for builder
 
----
 - name: Install build tools
   apt:
     name:

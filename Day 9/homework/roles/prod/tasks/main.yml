@@ -6,7 +6,6 @@
     name: "{{ tomcat_package }}"
     state: present
     update_cache: yes
-  notify: restart tomcat
 
 - name: Start and enable Tomcat
   systemd:

@@ -1,0 +1,98 @@
+pipeline {
+  agent {
+    docker {
+      image '94.131.91.193:8686/jenkins-maven-agent:1.0.1'
+      args '--entrypoint="" -v /var/run/docker.sock:/var/run/docker.sock'
+    }
+  }
+
+  environment {
+    REGISTRY     = '94.131.91.193:8787'
+    REPOSITORY   = 'deploy-prod'
+    IMAGE_NAME   = 'addressbook'
+    IMAGE_TAG    = 'latest'
+
+    REMOTE_HOST  = '94.131.89.176'
+    REMOTE_USER  = 'root'
+
+    FULL_IMAGE   = '94.131.91.193:8787/deploy-prod/addressbook:latest'
+  }
+
+  stages {
+
+    stage('Clean workspace') {
+      steps {
+        deleteDir()
+      }
+    }
+
+    stage('Checkout') {
+      steps {
+        git url: 'https://github.com/vaadin/addressbook.git'
+      }
+    }
+
+    stage('Build WAR') {
+      steps {
+        sh 'mvn clean package -B'
+      }
+    }
+
+    stage('Build Docker image') {
+      steps {
+        sh '''
+mkdir -p docker
+cp target/addressbook-*.war docker/addressbook.war
+
+cat > docker/Dockerfile <<EOF
+FROM tomcat:9-jdk17
+COPY addressbook.war /usr/local/tomcat/webapps/addressbook.war
+EXPOSE 8080
+EOF
+
+docker build -t addressbook:latest docker
+'''
+      }
+    }
+
+    stage('Docker login') {
+      steps {
+        withCredentials([
+          usernamePassword(
+            credentialsId: 'nexus-docker',
+            usernameVariable: 'DOCKER_USER',
+            passwordVariable: 'DOCKER_PASS'
+          )
+        ]) {
+          sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS 94.131.91.193:8787'
+        }
+      }
+    }
+
+    stage('Push image to registry') {
+      steps {
+        sh '''
+docker tag addressbook:latest 94.131.91.193:8787/deploy-prod/addressbook:latest
+docker push 94.131.91.193:8787/deploy-prod/addressbook:latest
+'''
+      }
+    }
+
+    stage('Deploy via SSH key (STABLE)') {
+      steps {
+        sshagent(credentials: ['ssh_id_rsa']) {
+          sh '''
+ssh -o StrictHostKeyChecking=no root@94.131.89.176 "
+  docker pull 94.131.91.193:8787/deploy-prod/addressbook:latest &&
+  docker stop addressbook || true &&
+  docker rm addressbook || true &&
+  docker run -d --name addressbook -p 8080:8080 94.131.91.193:8787/deploy-prod/addressbook:latest
+"
+'''
+        }
+      }
+    }
+
+  }
+}
+

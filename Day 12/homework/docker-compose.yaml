@@ -1,5 +1,4 @@
 ---
-
 services:
   db:
     image: mysql:5.5
@@ -14,7 +13,6 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
-
   builder:
     image: maven:3.8.5-eclipse-temurin-8-alpine
     working_dir: /app
@@ -26,7 +24,6 @@ services:
       cp target/*.war /output/ "
     volumes:
      - build_artifacts:/output
-     - ./Config.properties:/config/Config.properties:ro
 
   prod:
     image: tomcat:9.0.111-jre21-temurin-jammy
@@ -39,13 +36,8 @@ services:
       - "8080:8080"
     volumes:
       - build_artifacts:/usr/local/tomcat/webapps
-    # environment:
-    #   DB_IP: db
-    #   DB_PORT: 3306
-    #   DB_NAME: ${MYSQL_DB}
-    #   DB_USER: ${MYSQL_USER}
-    #   DB_PASSWORD: ${MYSQL_PASSWORD}
-
+      - ./Config.properties:/usr/local/tomcat/ROOT/Config.properties
+      
 volumes:
   build_artifacts:
   mysql_data:

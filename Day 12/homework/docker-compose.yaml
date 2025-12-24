@@ -28,7 +28,7 @@ services:
      - build_artifacts:/output
 
   prod:
-    image: tomcat:7.0.94-jre6
+    image: tomcat:7-jre6
     depends_on:
       db:
         condition: service_healthy

@@ -3,7 +3,6 @@
 services:
   db:
     image: mysql:5.5
-    container_name: 
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASS}
       MYSQL_DATABASE: ${MYSQL_DB}
@@ -17,7 +16,7 @@ services:
       retries: 10
 
   builder:
-    image: maven:3.2.5-jdk-6
+    image: maven:3.8.5-eclipse-temurin-8-alpine
     working_dir: /app
     command: sh -c "
       apk add --no-cache git &&
@@ -28,14 +27,23 @@ services:
     volumes:
      - build_artifacts:/output
 
-#   prod:
-#     image: tomcat:10.1.49-jre17-temurin-jammy
-#     depends_on:
-#       - builder
-#     ports:
-#       - "8080:8080"
-#     volumes:
-#       - build_artifacts:/usr/local/tomcat/webapps
+  prod:
+    image: tomcat:7.0.94-jre6
+    depends_on:
+      db:
+        condition: service_healthy
+      builder:
+        condition: service_completed_successfully
+    ports:
+      - "8080:8080"
+    volumes:
+      - build_artifacts:/usr/local/tomcat/webapps
+    environment:
+      DB_IP: db
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DB}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
 
 volumes:
   build_artifacts:

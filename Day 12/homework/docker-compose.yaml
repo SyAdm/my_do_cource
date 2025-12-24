@@ -3,6 +3,7 @@
 services:
   db:
     image: mysql:5.5
+    container_name: 
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASS}
       MYSQL_DATABASE: ${MYSQL_DB}
@@ -15,17 +16,17 @@ services:
       timeout: 20s
       retries: 10
 
-#   builder:
-#     image: maven:3.9.11-eclipse-temurin-11-alpine
-#     working_dir: /app
-#     command: sh -c "
-#       apk add --no-cache git &&
-#       git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git project &&
-#       cd project &&
-#       mvn -B package &&
-#       cp target/*.war /output/ "
-#     volumes:
-#      - build_artifacts:/output
+  builder:
+    image: maven:3.2.5-jdk-6
+    working_dir: /app
+    command: sh -c "
+      apk add --no-cache git &&
+      git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git project &&
+      cd project &&
+      mvn -B clean package &&
+      cp target/*.war /output/ "
+    volumes:
+     - build_artifacts:/output
 
 #   prod:
 #     image: tomcat:10.1.49-jre17-temurin-jammy
@@ -36,10 +37,7 @@ services:
 #     volumes:
 #       - build_artifacts:/usr/local/tomcat/webapps
 
-# volumes:
-#   build_artifacts:
 volumes:
-#  build_artifacts:
+  build_artifacts:
   mysql_data:
-
 ...

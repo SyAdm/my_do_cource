@@ -28,7 +28,7 @@ services:
      - build_artifacts:/output
 
   prod:
-    image: tomcat:7-jre6
+    image: tomcat:9.0.111-jre21-temurin-jammy
     depends_on:
       db:
         condition: service_healthy

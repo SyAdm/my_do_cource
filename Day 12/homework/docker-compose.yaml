@@ -26,6 +26,7 @@ services:
       cp target/*.war /output/ "
     volumes:
      - build_artifacts:/output
+     - ./Config.properties:/config/Config.properties:ro
 
   prod:
     image: tomcat:9.0.111-jre21-temurin-jammy
@@ -38,12 +39,12 @@ services:
       - "8080:8080"
     volumes:
       - build_artifacts:/usr/local/tomcat/webapps
-    environment:
-      DB_IP: db
-      DB_PORT: 3306
-      DB_NAME: ${MYSQL_DB}
-      DB_USER: ${MYSQL_USER}
-      DB_PASSWORD: ${MYSQL_PASSWORD}
+    # environment:
+    #   DB_IP: db
+    #   DB_PORT: 3306
+    #   DB_NAME: ${MYSQL_DB}
+    #   DB_USER: ${MYSQL_USER}
+    #   DB_PASSWORD: ${MYSQL_PASSWORD}
 
 volumes:
   build_artifacts:

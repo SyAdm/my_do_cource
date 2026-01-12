@@ -24,7 +24,7 @@ provider "yandex" {
 variable "number_of_vms" {
   description = "Сколько ВМ создать"
   type        = number
-  default     = 1
+  #default     = 1
 }
 
 # Всё остальное создается автоматически
@@ -70,7 +70,8 @@ resource "yandex_compute_instance" "vm" {
   }
 
   metadata = {
-    ssh-keys = "sherali:${file("~/.ssh/id_ed25519.pub")}"
+    #ssh-keys = "sherali:${file("~/.ssh/id_ed25519.pub")}"
+    user-data = "${file("/home/sherali/meta.txt")}"
   }
 }
 

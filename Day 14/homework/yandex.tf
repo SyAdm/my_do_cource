@@ -52,7 +52,8 @@ resource "yandex_compute_disk" "boot-disk" {
 resource "yandex_compute_instance" "vm" {
   count = var.number_of_vms
 
-  name = "tf-vm-${count.index + 1}"
+  name        = "tf-vm-${count.index + 1}"
+  platform_id = "standard-v3"
 
   resources {
     cores  = 2

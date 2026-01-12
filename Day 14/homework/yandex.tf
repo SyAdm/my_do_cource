@@ -14,6 +14,10 @@ locals {
 
 provider "yandex" {
   # Configuration options
+<<<<<<< HEAD
+=======
+  #token                    = "y0__xC42qLDCBjB3RMg5NjQhBZBKYxvVRWbp6F3narvtI3hUYxC1A"
+>>>>>>> 382edb7323c30cd5f1f6b83b991b4b1b544b5635
   endpoint                 = "api.yandexcloud.kz:443"
   cloud_id                 = local.cloud_id
   folder_id                = local.folder_id
@@ -21,6 +25,34 @@ provider "yandex" {
   zone                     = "kz1-a"
 }
 
+<<<<<<< HEAD
+=======
+# Создание сервисного аккаунта и назначение ему ролей
+
+# resource "yandex_iam_service_account" "vm-scale-scheduled-sa" {
+#   name      = "vm-scale-scheduled-sa"
+# }
+
+# resource "yandex_resourcemanager_folder_iam_member" "vm-scale-scheduled-sa-role-compute" {
+#   folder_id = var.folder_id
+#   role      = "compute.admin"
+#   member    = "serviceAccount:${yandex_iam_service_account.vm-scale-scheduled-sa.id}"
+# }
+
+# resource "yandex_resourcemanager_folder_iam_member" "vm-scale-scheduled-sa-role-iam" {
+#   folder_id = var.folder_id
+#   role      = "iam.serviceAccounts.user"
+#   member    = "serviceAccount:${yandex_iam_service_account.vm-scale-scheduled-sa.id}"
+# }
+
+# resource "yandex_resourcemanager_folder_iam_member" "vm-scale-scheduled-sa-role-functions" {
+#   folder_id = var.folder_id
+#   role      = "functions.functionInvoker"
+#   member    = "serviceAccount:${yandex_iam_service_account.vm-scale-scheduled-sa.id}"
+# }
+
+
+>>>>>>> 382edb7323c30cd5f1f6b83b991b4b1b544b5635
 variable "number_of_vms" {
   description = "Сколько ВМ создать"
   type        = number

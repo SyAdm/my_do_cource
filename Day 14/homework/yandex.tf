@@ -24,7 +24,7 @@ provider "yandex" {
 variable "number_of_vms" {
   description = "Сколько ВМ создать"
   type        = number
-  default     = 3
+  default     = 1
 }
 
 # Всё остальное создается автоматически

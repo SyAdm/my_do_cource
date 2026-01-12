@@ -13,7 +13,6 @@ locals {
 }
 
 provider "yandex" {
-  # Configuration options
   endpoint                 = "api.yandexcloud.kz:443"
   cloud_id                 = local.cloud_id
   folder_id                = local.folder_id
@@ -27,7 +26,6 @@ variable "number_of_vms" {
   #default     = 1
 }
 
-# Всё остальное создается автоматически
 resource "yandex_vpc_network" "network-1" {
   name = "tf-network"
 }
@@ -40,8 +38,7 @@ resource "yandex_vpc_subnet" "subnet-1" {
 }
 
 resource "yandex_compute_disk" "boot-disk" {
-  count = var.number_of_vms
-
+  count    = var.number_of_vms
   name     = "tf-disk-${count.index + 1}"
   type     = "network-hdd"
   zone     = "kz1-a"
@@ -50,8 +47,7 @@ resource "yandex_compute_disk" "boot-disk" {
 }
 
 resource "yandex_compute_instance" "vm" {
-  count = var.number_of_vms
-
+  count       = var.number_of_vms
   name        = "tf-vm-${count.index + 1}"
   platform_id = "standard-v3"
 
